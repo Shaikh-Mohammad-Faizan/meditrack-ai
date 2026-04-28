@@ -1,0 +1,584 @@
+/* src/app/globals.css */
+
+/* ========== RESET ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== CSS VARIABLES (dark defaults — overridden by ThemeProvider) ========== */
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-elevated: #1a1a2e;
+  --bg-glass: rgba(18, 18, 26, 0.6);
+  --border-glass: rgba(108, 99, 255, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --text-primary: #eaeaf4;
+  --text-secondary: #8b8ba7;
+  --text-muted: #5a5a72;
+  --accent: #6c63ff;
+  --accent-glow: rgba(108, 99, 255, 0.25);
+  --accent-soft: rgba(108, 99, 255, 0.1);
+  --success: #00d68f;
+  --success-glow: rgba(0, 214, 143, 0.25);
+  --success-soft: rgba(0, 214, 143, 0.1);
+  --danger: #ff4757;
+  --danger-glow: rgba(255, 71, 87, 0.25);
+  --danger-soft: rgba(255, 71, 87, 0.1);
+  --warning: #ffb84d;
+  --warning-glow: rgba(255, 184, 77, 0.25);
+  --warning-soft: rgba(255, 184, 77, 0.1);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --grid-dot: rgba(108, 99, 255, 0.06);
+  --font-outfit: "Outfit", sans-serif;
+  --font-ibm: "IBM Plex Sans", sans-serif;
+}
+
+/* ========== BASE ========== */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-ibm);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ========== GRID DOT BACKGROUND ========== */
+.grid-bg {
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ========== GLASSMORPHISM CARD ========== */
+.glass-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(108, 99, 255, 0.25);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ========== SOLID CARD (for bento grid items) ========== */
+.bento-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card:hover {
+  border-color: var(--border-glass);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* ========== STATUS BADGES ========== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: var(--font-ibm);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.status-in-transit {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+.status-at-risk {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid rgba(255, 71, 87, 0.2);
+}
+
+.status-delivered {
+  background: var(--success-soft);
+  color: var(--success);
+  border: 1px solid rgba(0, 214, 143, 0.2);
+}
+
+.status-created {
+  background: var(--warning-soft);
+  color: var(--warning);
+  border: 1px solid rgba(255, 184, 77, 0.2);
+}
+
+.status-failed {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid rgba(255, 71, 87, 0.2);
+}
+
+/* ========== PRIORITY BADGES ========== */
+.priority-critical {
+  color: var(--danger);
+}
+
+.priority-urgent {
+  color: var(--warning);
+}
+
+.priority-normal {
+  color: var(--text-secondary);
+}
+
+/* ========== PULSING DOT ========== */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.pulse-dot-success {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success-glow);
+}
+
+.pulse-dot-danger {
+  background: var(--danger);
+  box-shadow: 0 0 8px var(--danger-glow);
+}
+
+.pulse-dot-warning {
+  background: var(--warning);
+  box-shadow: 0 0 8px var(--warning-glow);
+}
+
+.pulse-dot-accent {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fadeIn 0.5s ease 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 0.5s ease 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fadeIn 0.5s ease 0.3s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-4 {
+  animation: fadeIn 0.5s ease 0.4s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-5 {
+  animation: fadeIn 0.5s ease 0.5s forwards;
+  opacity: 0;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-glass);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ========== UTILITY ========== */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ========== CLERK DARK THEME OVERRIDES ========== */
+.cl-internal-b3fm6y,
+.cl-formFieldInput,
+.cl-input {
+  background-color: #1A1A2E !important;
+  border-color: rgba(108, 99, 255, 0.2) !important;
+  color: #EAEAF4 !important;
+}
+
+.cl-formFieldInput::placeholder,
+.cl-input::placeholder {
+  color: #5A5A72 !important;
+}
+
+.cl-headerTitle {
+  color: #EAEAF4 !important;
+}
+
+.cl-headerSubtitle {
+  color: #8B8BA7 !important;
+}
+
+.cl-formFieldLabel {
+  color: #EAEAF4 !important;
+}
+
+.cl-footerActionText {
+  color: #8B8BA7 !important;
+}
+
+.cl-footerActionLink {
+  color: #6C63FF !important;
+}
+
+.cl-socialButtonsBlockButton {
+  background-color: #1A1A2E !important;
+  border-color: rgba(108, 99, 255, 0.15) !important;
+}
+
+.cl-socialButtonsBlockButtonText {
+  color: #EAEAF4 !important;
+}
+
+.cl-dividerLine {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.cl-dividerText {
+  color: #5A5A72 !important;
+}
+
+.cl-card {
+  background-color: #12121A !important;
+  border: 1px solid rgba(108, 99, 255, 0.12) !important;
+}
+
+.cl-userButtonPopoverCard {
+  background-color: #12121A !important;
+  border: 1px solid rgba(108, 99, 255, 0.12) !important;
+}
+
+.cl-userButtonPopoverActionButton,
+.cl-userButtonPopoverActionButtonText {
+  color: #EAEAF4 !important;
+}
+
+.cl-userButtonPopoverActionButtonIcon {
+  color: #8B8BA7 !important;
+}
+
+.cl-userPreviewMainIdentifier {
+  color: #EAEAF4 !important;
+}
+
+.cl-userPreviewSecondaryIdentifier {
+  color: #8B8BA7 !important;
+}
+
+.cl-formButtonPrimary {
+  background-color: #6C63FF !important;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.25) !important;
+}
+
+.cl-badge {
+  color: #EAEAF4 !important;
+  background-color: #1A1A2E !important;
+}
+
+.cl-modalContent {
+  background-color: #12121A !important;
+}
+
+.cl-profileSectionTitle,
+.cl-profileSectionTitleText {
+  color: #EAEAF4 !important;
+}
+
+.cl-profileSectionContent {
+  color: #8B8BA7 !important;
+}
+
+.cl-formFieldHintText {
+  color: #5A5A72 !important;
+}
+
+.cl-alertText {
+  color: #EAEAF4 !important;
+}
+
+.cl-userButtonPopoverFooter {
+  display: none !important;
+}
+
+.cl-formFieldInputShowPasswordButton {
+  color: #8B8BA7 !important;
+}
+
+.cl-otpCodeFieldInput {
+  background-color: #1A1A2E !important;
+  border-color: rgba(108, 99, 255, 0.2) !important;
+  color: #EAEAF4 !important;
+}
+
+.cl-identityPreviewEditButton {
+  color: #6C63FF !important;
+}
+
+.cl-formResendCodeLink {
+  color: #6C63FF !important;
+}
+
+.cl-selectButton {
+  background-color: #1A1A2E !important;
+  border-color: rgba(108, 99, 255, 0.2) !important;
+  color: #EAEAF4 !important;
+}
+
+.cl-selectOption {
+  background-color: #12121A !important;
+  color: #EAEAF4 !important;
+}
+
+.cl-selectOption:hover {
+  background-color: #1A1A2E !important;
+}
+
+.cl-navbar {
+  background-color: #12121A !important;
+}
+
+.cl-navbarButton {
+  color: #8B8BA7 !important;
+}
+
+.cl-navbarButton[data-active="true"] {
+  color: #6C63FF !important;
+}
+
+.cl-pageScrollBox {
+  background-color: #12121A !important;
+}
+
+.cl-profilePage {
+  background-color: #12121A !important;
+}
+
+.cl-accordionTriggerButton {
+  color: #EAEAF4 !important;
+}
+
+.cl-accordionContent {
+  color: #8B8BA7 !important;
+}
+
+.cl-menuButton {
+  color: #EAEAF4 !important;
+}
+
+.cl-menuList {
+  background-color: #12121A !important;
+  border: 1px solid rgba(108, 99, 255, 0.12) !important;
+}
+
+.cl-menuItem {
+  color: #EAEAF4 !important;
+}
+
+.cl-menuItem:hover {
+  background-color: #1A1A2E !important;
+}
+/* ========== CLERK ACCOUNT/PROFILE MODAL ========== */
+.cl-modalContent,
+.cl-modal-content,
+.cl-profilePage,
+.cl-account-page {
+  background-color: #12121A !important;
+  color: #EAEAF4 !important;
+}
+
+.cl-headerTitle,
+.cl-header__title,
+.cl-profileSectionTitle,
+.cl-profileSectionTitleText,
+.cl-formFieldLabel,
+.cl-formFieldLabelRow,
+.cl-accordionTriggerButton,
+.cl-breadcrumbs,
+.cl-breadcrumbsItem,
+.cl-navbarButton,
+.cl-profileSectionPrimaryButton,
+.cl-menuButton,
+.cl-menuItem,
+.cl-userPreviewMainIdentifier,
+.cl-formattedPhoneNumber,
+.cl-profileSectionContent__emailAddresses,
+.cl-profileSectionContent__connectedAccounts,
+.cl-profileSectionContent,
+.cl-internal-17jdun,
+.cl-internal-1dauvx {
+  color: #EAEAF4 !important;
+}
+
+.cl-headerSubtitle,
+.cl-header__subtitle,
+.cl-profileSectionSubtitle,
+.cl-userPreviewSecondaryIdentifier,
+.cl-internal-1hp6vw,
+.cl-formFieldHintText {
+  color: #8B8BA7 !important;
+}
+
+.cl-navbar {
+  background-color: #0A0A0F !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.cl-navbarButton {
+  color: #8B8BA7 !important;
+}
+
+.cl-navbarButton[data-active="true"] {
+  color: #6C63FF !important;
+  background-color: rgba(108, 99, 255, 0.1) !important;
+}
+
+.cl-pageScrollBox {
+  background-color: #12121A !important;
+}
+
+.cl-profileSection {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.cl-badge,
+.cl-badge__primary {
+  background-color: #1A1A2E !important;
+  color: #EAEAF4 !important;
+  border: 1px solid rgba(108, 99, 255, 0.2) !important;
+}
+
+.cl-userButtonPopoverActionButton__manageAccount,
+.cl-userButtonPopoverActionButton__signOut {
+  color: #EAEAF4 !important;
+}
+
+.cl-avatarBox {
+  border: 2px solid rgba(108, 99, 255, 0.3) !important;
+}
+
+.cl-profileSectionPrimaryButton,
+.cl-button {
+  color: #6C63FF !important;
+}
+
+.cl-modalCloseButton {
+  color: #8B8BA7 !important;
+}
+
+.cl-internal-b3fm6y,
+.cl-internal-16vtwdp,
+[class*="cl-internal"] {
+  color: #EAEAF4 !important;
+}
+
+.cl-menuList {
+  background-color: #12121A !important;
+  border: 1px solid rgba(108, 99, 255, 0.12) !important;
+}
+
+.cl-menuItem:hover {
+  background-color: #1A1A2E !important;
+}
